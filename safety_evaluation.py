@@ -181,7 +181,11 @@ class evaluator:
 				avgImpact += impact
 			'''
 		if showMoreStatistics:
-			print("%d/%d missing; got %f of %f (%d/%d good, %d/%d bad)" % (num_missing,possible_values,score,max_score,numGood,maxGood,numBad,maxBad))
+			print("there are %d missing values of a total of %d values" % (num_missing,possible_values))
+			print("score: %d. Maximal score is %f" % (score,max_score))
+			print("flipped %d instances in the 'good' direction (i.e. from T to F) (of possibly %d)" % (numGood,maxGood))
+			print("flipped %d instances in the 'bad' direction (i.e. from F to T) (of possibly %d)" % (numBad,maxBad))
+			#print("%d/%d missing; got %f of %f (%d/%d good, %d/%d bad)" % (num_missing,possible_values,score,max_score,numGood,maxGood,numBad,maxBad))
 		'''
 		if analysis:
 			print("total: %f (%f)" % (score, avgImpact/relevantImpacts))
@@ -383,7 +387,7 @@ def showBoxplots(setup):
 	import matplotlib.pyplot as plt
 	import matplotlib
 	matplotlib.use('TkAgg')
-	plt.boxplot(setup.outcomes)
+	plt.boxplot([[c for c in confidences if c] for confidences in setup.outcomes])
 	plt.show()
 def readObfuscation(setup, directory,identifier=None):
 	obf=obfuscation(setup, identifier=(identifier or directory))
